@@ -1,6 +1,6 @@
 # Test Strategy
 
-> **Status:** TEMPLATE / DRAFT. The sections below define the intended approach. Product-specific content will be added only after verified exploration of the application (Milestone M1).
+> **Status:** DRAFT. The sections below define the intended approach. Product-specific content will be added only after verified exploration of the application (Milestone M1).
 
 | Field | Value |
 |---|---|

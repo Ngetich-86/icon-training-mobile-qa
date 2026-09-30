@@ -1,6 +1,6 @@
 # Exploratory Charter & Session Report Template
 
-> Copy this file to `charters/CH-XXX-short-title.md` to define a charter. After the session, copy it to `session-reports/SR-XXX-YYYY-MM-DD-short-title.md` and complete the session sections.
+> **Status:** TEMPLATE. Copy this file to `charters/CH-XXX-short-title.md` to define a charter. After the session, copy it to `session-reports/SR-XXX-YYYY-MM-DD-short-title.md` and complete the session sections.
 
 ## Charter
 

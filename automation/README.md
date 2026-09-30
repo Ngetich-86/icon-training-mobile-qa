@@ -1,6 +1,6 @@
 # Automation (PLANNED)
 
-> **Status: NOT IMPLEMENTED.** This folder is a placeholder for a future Android UI automation framework. No dependencies have been installed and Appium/WebdriverIO have not been initialized.
+> **Status:** PLANNED. Nothing has been implemented. This folder is a placeholder for a future Android UI automation framework. No dependencies have been installed and Appium/WebdriverIO have not been initialized.
 
 ## Proposed architecture
 

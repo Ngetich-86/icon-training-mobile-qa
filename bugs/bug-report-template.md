@@ -1,6 +1,6 @@
 # Bug Report Template
 
-> Copy this template to `bugs/BUG-XXX-short-title.md` and, where appropriate, to a GitHub Issue using the **Bug report** issue form. Record only behavior you actually observed. **Do not** use this template for security or privacy vulnerabilities. Report those privately (see [README](README.md#responsible-disclosure)).
+> **Status:** TEMPLATE. Copy this template to `bugs/BUG-XXX-short-title.md` and, where appropriate, to a GitHub Issue using the **Bug report** issue form. Record only behavior you actually observed. **Do not** use this template for security or privacy vulnerabilities. Report those privately (see [README](README.md#responsible-disclosure)).
 
 ---
 
@@ -11,7 +11,7 @@
 | Application Version | _Exact version and build_ |
 | Environment | _Environment ID (see docs/test-environments.md)_ |
 | Device | _Model / emulator image_ |
-| OS | _Android version / API level_ |
+| OS Version | _Android version / API level_ |
 | Severity | _Critical / Major / Minor / Trivial_ |
 | Priority | _Critical / High / Medium / Low_ |
 | Reproducibility | _Always / Intermittent (x of y attempts) / Once_ |
@@ -41,7 +41,7 @@ _What actually happened. Describe it factually, without speculating about cause.
 
 _Links to sanitized screenshots or recordings in `bugs/evidence/`._
 
-## Logs
+## Relevant Logs
 
 _Sanitized, minimal log excerpt, if relevant. Remove tokens, identifiers and personal data._
 
@@ -56,22 +56,31 @@ _Workarounds, related issues, variations tried, or open questions._
 
 ## Severity guidance
 
-Severity describes the **impact on the user or product**. Priority describes **how urgently the issue should be addressed** and is set with product context.
+- **Severity** is the **impact** of the defect on the user or product. It is set by the reporter from the observed behavior and does not change with schedules or opinions about urgency.
+- **Priority** is the **urgency**, i.e. the order in which the defect should be addressed. It depends on severity but also on context such as how many users are affected, how often it occurs and release timing.
 
-| Severity | Definition | Examples (illustrative only) |
+A defect can be high severity and low priority (e.g. a crash in a rarely used path), or low severity and high priority (e.g. a spelling mistake on the first screen every user sees).
+
+Choose severity from the impact, not from how the defect feels. Use the lowest level whose definition fits.
+
+| Severity | Definition (impact) | Generic examples (hypothetical) |
 |---|---|---|
-| **Critical** | Blocks a core journey with no workaround, causes data loss or corruption, crashes on launch, or exposes personal data. | App crashes on launch; completed workout data is lost; another user's data is visible. |
-| **Major** | Significant feature failure or incorrect result with a difficult workaround; major accessibility barrier. | A key feature fails consistently; tracked values are recorded incorrectly; a screen is unusable with a screen reader. |
-| **Minor** | Feature works but with limited-impact incorrect behavior, or an easy workaround exists. | Incorrect validation message; layout clipping on some screen sizes; a setting requires reopening the screen to apply. |
-| **Trivial** | Cosmetic issue with no functional impact. | Typo; minor alignment or spacing inconsistency; inconsistent capitalization. |
+| **Critical** | A core user journey cannot be completed and there is no workaround, or user data is lost or corrupted. | Any app: the app closes immediately on every launch; data a user saved is no longer present after a restart. |
+| **Major** | A feature does not work or produces incorrect results, and the workaround is difficult or unreasonable; or a major accessibility barrier. | Any app: a form rejects all valid input; a saved value is displayed with the wrong number; a button cannot be activated with a screen reader. |
+| **Minor** | A feature works but behaves incorrectly in a limited way, or an easy workaround exists. | Any app: a validation message names the wrong field; text is clipped on a small screen; a change applies only after reopening the screen. |
+| **Trivial** | Cosmetic issue with no functional impact. | Any app: a typo; inconsistent spacing or capitalization. |
 
-*The examples above illustrate the categories only. They are not observed defects.*
+*These examples are generic and hypothetical. They are not observations of Icon Training and do not describe any real defect.*
+
+Potential security or privacy issues are not rated here. They follow [responsible disclosure](README.md#responsible-disclosure) instead of the public defect workflow.
 
 ## Priority guidance
 
-| Priority | Meaning |
+| Priority | Meaning (urgency) |
 |---|---|
-| Critical | Must be addressed immediately |
+| Critical | Should be addressed immediately, before other work |
 | High | Should be addressed in the next release |
 | Medium | Should be addressed when capacity allows |
-| Low | Nice to fix |
+| Low | Can be deferred; fix if convenient |
+
+In this independent portfolio, the reporter records a **suggested** priority. It is not a commitment by Icon Train Smarter.

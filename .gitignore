@@ -2,6 +2,7 @@
 # Icon Training Mobile QA Portfolio — .gitignore
 # Note: sanitized evidence under bugs/evidence/ and reports/ is
 # intentionally NOT ignored. Review it manually before committing.
+# Commit sanitized log excerpts as .txt (see CONTRIBUTING.md).
 # =============================================================
 
 # ---------- Node.js ----------
@@ -61,7 +62,16 @@ cookies*.json
 logs/
 *.log
 logcat*.txt
-bugreport-*.zip
+bugreport*.zip
+bugreport*.txt
+tombstone_*
+anr_*
+
+# ---------- HTTP / network captures ----------
+# May contain tokens, cookies and personal data. Never commit.
+*.har
+*.pcap
+*.pcapng
 
 # ---------- Local / temporary test artifacts ----------
 # Raw, unsanitized captures go in these folders and are never committed.

@@ -186,7 +186,8 @@ Rules:
 
 - Use **synthetic test data** whenever possible (`test-data/synthetic/`).
 - Review and **sanitize every screenshot, recording and log** before publication. Redact names, emails, account identifiers, health metrics, device identifiers, location and notifications.
-- **Responsible disclosure:** a potential security or privacy vulnerability must **not** be filed as a public issue or committed here. Report it privately to Icon Train Smarter through the appropriate channel. It may be referenced publicly only after it has been resolved, and only with appropriate permission.
+- **Raw captures are never committed.** Only sanitized copies are published, and redaction must be destructive (the underlying data removed, not covered by an overlay), with metadata stripped.
+- **Responsible disclosure:** a potential security vulnerability, privacy issue, sensitive data exposure, or anything involving private endpoints or authentication/session information must **not** be filed as a public issue or committed here. Report it privately to Icon Train Smarter through the appropriate channel. It may be referenced publicly only after it has been resolved, and only with appropriate permission.
 
 Full rules are in [CONTRIBUTING.md](CONTRIBUTING.md#privacy-checks).
 
@@ -196,7 +197,7 @@ Full rules are in [CONTRIBUTING.md](CONTRIBUTING.md#privacy-checks).
 
 | Milestone | Status |
 |---|---|
-| M0 — QA Repository Foundation | In progress |
+| M0 — QA Repository Foundation | Complete |
 | M1 — Product Exploration & Feature Inventory | Not started |
 | M2 — Risk Analysis & Test Design | Not started |
 | M3 — Manual Functional Testing | Not started |

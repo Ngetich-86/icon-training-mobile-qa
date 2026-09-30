@@ -6,8 +6,11 @@ body:
   - type: markdown
     attributes:
       value: |
-        **Record only behavior you actually observed.** Do NOT report security or privacy vulnerabilities here. Report those privately (see README → Privacy & Responsible Disclosure).
-        Do not paste credentials, tokens, personal data or unsanitized screenshots/logs.
+        **Record only behavior you actually observed.**
+
+        Do NOT use this form for security vulnerabilities, privacy issues, sensitive data exposure, private endpoints or authentication/session information. Report those privately (see CONTRIBUTING.md → Responsible disclosure).
+
+        Do not paste credentials, tokens, personal data or unsanitized screenshots/logs. Severity is the impact of the defect; priority is its urgency (see bugs/bug-report-template.md).
   - type: input
     id: app-version
     attributes:
@@ -46,6 +49,18 @@ body:
         - Major
         - Minor
         - Trivial
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority (suggested)
+      description: Urgency. See bugs/bug-report-template.md for guidance.
+      options:
+        - Critical
+        - High
+        - Medium
+        - Low
     validations:
       required: true
   - type: dropdown
@@ -92,8 +107,14 @@ body:
   - type: textarea
     id: logs
     attributes:
-      label: Logs (sanitized)
+      label: Relevant logs (sanitized)
+      description: Minimal excerpt only. Remove tokens, headers, cookies, identifiers and personal data.
       render: text
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Workarounds, related test case IDs, variations tried, open questions.
   - type: checkboxes
     id: privacy
     attributes:
@@ -101,5 +122,5 @@ body:
       options:
         - label: Evidence and logs are sanitized and contain no credentials, personal data or confidential information.
           required: true
-        - label: This is not a security or privacy vulnerability.
+        - label: This is not a security vulnerability, privacy issue or sensitive data exposure.
           required: true

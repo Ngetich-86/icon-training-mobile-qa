@@ -33,8 +33,11 @@ Closes #
 
 ## Privacy checklist
 
-- [ ] No passwords, tokens, cookies, API keys or other secrets
-- [ ] No production user data or personal health information
-- [ ] No proprietary source code, private endpoints, internal documents, communications or issue-tracker screenshots
-- [ ] Screenshots, recordings and logs sanitized (destructive redaction, metadata stripped)
+Every screenshot, recording, log and report in this PR has been checked against the [evidence sanitization checklist](https://github.com/Ngetich-86/icon-training-mobile-qa/blob/main/CONTRIBUTING.md#evidence-sanitization-checklist).
+
+- [ ] No passwords, tokens, cookies, API keys, authorization headers or other secrets
+- [ ] No real users' names, emails, phone numbers, profile photos, or production user data
+- [ ] No personal health information or health/fitness metrics linked to a real person
+- [ ] No proprietary source code, internal URLs, private endpoints, internal documents, communications or confidential issue IDs
+- [ ] Only sanitized copies committed (no raw captures); redaction is destructive and metadata is stripped
 - [ ] No security/privacy vulnerability details (use responsible disclosure)

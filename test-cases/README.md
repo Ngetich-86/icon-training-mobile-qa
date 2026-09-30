@@ -29,7 +29,7 @@ File naming: `<area>/TC-<PREFIX>-001-short-title.md`. Related cases may also be 
 |---|---|
 | **Test Case ID** | Unique ID, e.g. `TC-AUTH-001` |
 | **Title** | Short, specific description of what is verified |
-| **Feature** | Feature area / sub-feature |
+| **Feature / Area** | Feature area / sub-feature |
 | **Priority** | Critical / High / Medium / Low (from the risk assessment) |
 | **Type** | Smoke / Functional / Regression / Negative / Boundary / Mobile-specific / Permission / Accessibility / Network / AI evaluation |
 | **Preconditions** | Required state before the steps |
@@ -40,7 +40,7 @@ File naming: `<area>/TC-<PREFIX>-001-short-title.md`. Related cases may also be 
 | **Status** | One of the allowed statuses below |
 | **Environment** | Environment ID from `docs/test-environments.md` |
 | **Application Version** | Exact version tested |
-| **Evidence** | Links to sanitized evidence |
+| **Evidence** | Relative links to sanitized evidence (see [CONTRIBUTING.md](../CONTRIBUTING.md#evidence-naming-and-storage)) |
 | **Notes** | Linked bugs, observations, follow-ups |
 
 ## Allowed execution statuses
@@ -48,17 +48,19 @@ File naming: `<area>/TC-<PREFIX>-001-short-title.md`. Related cases may also be 
 | Status | Meaning |
 |---|---|
 | `NOT RUN` | Designed but not yet executed. **Default for all new test cases.** |
-| `PASS` | Executed. Actual result matches expected result. |
-| `FAIL` | Executed. Actual result differs from expected. A linked bug report is required. |
-| `BLOCKED` | Could not be executed because of an external blocker. The reason is required. |
-| `SKIPPED` | Deliberately not executed in this cycle. The reason is required. |
+| `PASS` | Executed, and the observed actual result matches the expected result. |
+| `FAIL` | Executed, and an observed actual result differs from the expected result. A linked bug report is required. |
+| `BLOCKED` | Execution was attempted or planned but could not be completed because of a blocker (e.g. a defect in an earlier step, unavailable test account, environment problem). The blocker must be identified, with a link to the related bug or issue where one exists. |
+| `SKIPPED` | Intentionally not executed in this cycle. The reason must be recorded (e.g. out of scope for the cycle, feature not present in this version). |
 
 ### Rules
 
 - New test cases **must** default to `NOT RUN`.
 - **Never** mark a test `PASS` automatically or without actually executing it.
-- A status other than `NOT RUN` requires **Environment**, **Application Version** and date.
+- A status other than `NOT RUN` requires **Environment**, **Application Version**, date and tester in the execution history.
+- `PASS` and `FAIL` require an **Actual Result** describing what was observed.
 - `FAIL` requires a linked bug report and sanitized evidence.
+- `BLOCKED` and `SKIPPED` require the blocker or reason in **Notes**.
 - When re-executing against a new version, record the new result with the new version and do not overwrite history. Use the execution history table.
 
 ## Test case template
@@ -70,7 +72,7 @@ File naming: `<area>/TC-<PREFIX>-001-short-title.md`. Related cases may also be 
 |---|---|
 | Test Case ID | TC-XXX-000 |
 | Title | |
-| Feature | |
+| Feature / Area | |
 | Priority | |
 | Type | |
 | Preconditions | |
