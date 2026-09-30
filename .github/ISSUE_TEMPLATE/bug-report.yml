@@ -1,0 +1,105 @@
+name: Bug report
+description: Report a defect actually observed while testing the publicly available app.
+title: "[BUG] <area>: <concise description>"
+labels: ["type:bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Record only behavior you actually observed.** Do NOT report security or privacy vulnerabilities here. Report those privately (see README → Privacy & Responsible Disclosure).
+        Do not paste credentials, tokens, personal data or unsanitized screenshots/logs.
+  - type: input
+    id: app-version
+    attributes:
+      label: Application version
+      description: Exact version and build, as shown in the app or store listing.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment ID
+      description: From docs/test-environments.md
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device
+      description: Model or emulator image
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: OS version
+      description: e.g. Android 14 (API 34)
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: See bugs/bug-report-template.md for guidance.
+      options:
+        - Critical
+        - Major
+        - Minor
+        - Trivial
+    validations:
+      required: true
+  - type: dropdown
+    id: reproducibility
+    attributes:
+      label: Reproducibility
+      options:
+        - Always
+        - Intermittent
+        - Once
+    validations:
+      required: true
+  - type: textarea
+    id: preconditions
+    attributes:
+      label: Preconditions
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Links to sanitized evidence in bugs/evidence/.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs (sanitized)
+      render: text
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy confirmation
+      options:
+        - label: Evidence and logs are sanitized and contain no credentials, personal data or confidential information.
+          required: true
+        - label: This is not a security or privacy vulnerability.
+          required: true

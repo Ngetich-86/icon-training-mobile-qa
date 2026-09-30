@@ -1,0 +1,96 @@
+# =============================================================
+# Icon Training Mobile QA Portfolio — .gitignore
+# Note: sanitized evidence under bugs/evidence/ and reports/ is
+# intentionally NOT ignored. Review it manually before committing.
+# =============================================================
+
+# ---------- Node.js ----------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+.npm/
+.yarn/cache/
+.yarn/install-state.gz
+*.tgz
+
+# ---------- TypeScript ----------
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# ---------- WebdriverIO / Appium ----------
+.wdio/
+wdio-logs/
+appium.log
+appium-*.log
+.appium/
+# App binaries: never commit the application under test
+*.apk
+*.aab
+*.ipa
+*.xapk
+
+# ---------- Allure / generated reports ----------
+allure-results/
+allure-report/
+.allure/
+junit-results/
+coverage/
+
+# ---------- Environment files & credentials ----------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.keystore
+*.jks
+credentials*.json
+secrets*.json
+service-account*.json
+*.secret
+auth-state*.json
+cookies*.json
+
+# ---------- Logs ----------
+logs/
+*.log
+logcat*.txt
+bugreport-*.zip
+
+# ---------- Local / temporary test artifacts ----------
+# Raw, unsanitized captures go in these folders and are never committed.
+tmp/
+temp/
+.tmp/
+raw-evidence/
+unsanitized/
+automation/screenshots/
+automation/videos/
+automation/artifacts/
+*.raw.png
+*.raw.jpg
+*.raw.mp4
+*.screenrecord.mp4
+
+# ---------- IDE ----------
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+
+# ---------- OS ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+Zone.Identifier
+*:Zone.Identifier

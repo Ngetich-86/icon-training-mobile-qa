@@ -1,0 +1,49 @@
+name: QA task
+description: Plan a QA activity (test design, execution, exploratory, automation, documentation, CI).
+title: "<concise task title>"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe future work. Do not state results that have not been observed. Add `type:`, `area:` and `priority:` labels and a milestone.
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Tasks
+      value: |
+        - [ ]
+    validations:
+      required: true
+  - type: textarea
+    id: deliverables
+    attributes:
+      label: Deliverables
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Completion requirements, not expected product results.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence required
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes / constraints
