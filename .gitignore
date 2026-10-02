@@ -88,6 +88,15 @@ automation/artifacts/
 *.raw.mp4
 *.screenrecord.mp4
 
+# ---------- Maestro raw output ----------
+# Debug output (logs, screenshots, UI hierarchy) and reports can contain the
+# device serial, notifications and personal data. Never commit raw output.
+.maestro/
+automation/maestro/output/
+maestro-debug*/
+hierarchy*.json
+window_dump*.xml
+
 # ---------- IDE ----------
 .vscode/*
 !.vscode/extensions.json

@@ -1,0 +1,18 @@
+# TC-AUTH-001 — Signed-out app launch shows the signed-out launch screen
+# Test case: test-cases/authentication/TC-AUTH-001-signed-out-launch-screen.md
+# Precondition: no user signed in on the device. App data is NOT cleared.
+appId: app.icontraining.icon
+name: TC-AUTH-001 signed-out launch screen
+tags:
+  - smoke
+  - auth
+---
+- launchApp:
+    clearState: false
+    # Set explicitly to the device's current state so Maestro does not try
+    # to grant every declared permission (see docs/automation-strategy.md §12).
+    permissions:
+      notifications: allow
+- assertVisible: "Start"
+- assertVisible: "Have an account\\?.*"
+- assertVisible: "Login"

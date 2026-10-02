@@ -1,8 +1,8 @@
-# Automation (PLANNED)
+# Automation
 
-> **Status:** PLANNED. Nothing has been implemented. This folder is a placeholder for a future Android UI automation framework. No dependencies have been installed and Appium/WebdriverIO have not been initialized.
+> **Status:** Revised 2026-10-02. Automation uses **Maestro**: see [maestro/](maestro/README.md), which holds one smoke flow. There is no regression suite yet. The Appium / WebdriverIO architecture below is the original plan (2026-09-30), kept for history; its placeholder folders (`config/`, `screens/`, `tests/`, `fixtures/`, `utils/`) are unused. Reasons for the change are in [docs/automation-strategy.md](../docs/automation-strategy.md#9-strategy-revision--2026-10-02-maestro-as-the-initial-framework).
 
-## Proposed architecture
+## Original proposed architecture (superseded)
 
 ```
 Appium
@@ -22,7 +22,7 @@ GitHub Actions
 Allure reports
 ```
 
-## Planned folder layout
+## Original planned folder layout (unused)
 
 | Folder | Planned purpose |
 |---|---|

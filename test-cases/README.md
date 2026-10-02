@@ -1,6 +1,6 @@
 # Test Cases
 
-> **No test cases have been written or executed yet.** Test design begins in Milestone M2, after the verified feature inventory (M1).
+> **One test case exists:** [`TC-AUTH-001`](authentication/TC-AUTH-001-signed-out-launch-screen.md) (smoke, automated with Maestro). Broader test design continues in Milestone M2, after the verified feature inventory (M1).
 
 ## Organization
 
