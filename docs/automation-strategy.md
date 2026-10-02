@@ -90,7 +90,8 @@ The original plan (sections 3, 5 and 6) chose Appium + WebdriverIO + TypeScript.
 | Layer | Tool | Status |
 |---|---|---|
 | UI automation | Maestro CLI 2.11.0 (Windows) | In use: 2 flows |
-| Device bridge | Android Platform Tools / ADB 37.0.1 (Windows) | In use |
+| Device bridge | Android Platform Tools / ADB 37.0.1 (Windows) | In use: wireless ADB primary since 2026-10-02, USB fallback |
+| Preflight | `automation/maestro/scripts/preflight.ps1` | In use: device selection and environment checks before each run |
 | Device | Physical OPPO Reno5 5G, `ENV-001` | In use |
 | Runtime | JDK 18 (Windows), set per session | In use |
 | Mirroring / observation | scrcpy 4.1 | Available |
@@ -102,6 +103,8 @@ The original plan (sections 3, 5 and 6) chose Appium + WebdriverIO + TypeScript.
 ```
 automation/maestro/
 ├── README.md        How to run, conventions, device constraints
+├── scripts/
+│   └── preflight.ps1  Runtime device selection and environment checks
 └── flows/
     ├── smoke/       Smoke flows, one per test case, named after the TC- ID
     └── auth/        Authentication / account-entry navigation flows
@@ -159,9 +162,19 @@ Automation stops and reports when: an unknown sensitive screen appears; credenti
 
 ## 12. Device constraints observed on `ENV-001` (ColorOS 13.1)
 
-- **Helper reinstall and installer screen:** Maestro installs its helper apps at the start of a run, and they are no longer present afterwards. ColorOS sometimes shows its own app-installed result screen over the app at that moment. On 2026-10-02 this caused one tooling failure (the target element was hidden behind the installer screen). Flows should start with `launchApp`, which brings the app back to the foreground. `--no-reinstall-driver` does not help, because the helpers do not persist.
+- **Helper reinstall and installer screen:** by default, Maestro installs its helper apps (`dev.mobile.maestro`, `dev.mobile.maestro.test`) at the start of every run and uninstalls them when the run ends (Maestro 2.11.0 source, `AndroidDriver.kt`). ColorOS sometimes shows its own post-install screen (`com.oplus.appdetail`, "Installed" / *Done*) over the app after such an install. On 2026-10-02 this caused tooling failures (the target element was hidden behind the screen).
+  - *Superseded statement (kept for history):* an earlier version of this section said "`--no-reinstall-driver` does not help, because the helpers do not persist". Direct investigation on 2026-10-02 showed this was wrong: the helpers do not persist **because** the default mode uninstalls them. With `--no-reinstall-driver`, Maestro installs them only if missing and does not uninstall them.
+  - *Verified 2026-10-02:* with `--no-reinstall-driver`, the first run installed both helpers and they were still installed before and after the later runs. The ColorOS post-install screen was not in the foreground after runs 1 and 3; run 2 lost the wireless ADB connection before this could be checked. Diagnostic results: run 1 PASS, runs 2 and 3 BLOCKED / INFRASTRUCTURE (connection loss; helper death). These diagnostic runs are not recorded as formal test executions.
+- **Helper lifecycle (adopted 2026-10-02):**
+  - Normal QA runs: keep the helpers installed and run with `--no-reinstall-driver`.
+  - Maestro version change: refresh the helpers once with the new version (one run without `--no-reinstall-driver`, or uninstall both helpers and run with the preflight's `-AllowHelperInstall`), so the CLI and device-side components match.
+  - Project completion or device return: uninstall both helper apps.
+- **Wireless ADB stability (open blocker):** on 2026-10-02 wireless ADB dropped twice. Once it dropped during a run (the run was BLOCKED / INFRASTRUCTURE), and each time it had to be reconnected manually on a new port. Unattended runs need a stable link or a safe way to reconnect; neither exists yet.
+- **Transports vs devices:** adb can list several transports for the one physical device (explicit TCP endpoint, mDNS/TLS discovery, USB, and stale `offline` entries). The preflight counts physical devices separately from transports and passes one selected transport to `maestro --device`.
+- **Flow paths from a WSL checkout:** Windows programs cannot use a `\\wsl.localhost\...` folder as their working directory, so relative flow paths fail (Maestro falls back to `C:\Windows`). Pass the full path to the flow.
 - **Default permission grants:** by default, Maestro's `launchApp` tries to grant every permission the app declares. ColorOS rejected all of these attempts (`SecurityException`). Flows therefore set `permissions` explicitly to the current device state, so that a run does not try to change permissions.
-- **Helper process dying:** on 2026-10-02 the Maestro helper on the device stopped mid-run (`DeviceServerDiedException` while reading the view hierarchy) after a tap had already been performed. A run that ends this way is classified as BLOCKED / INFRASTRUCTURE, not as an application failure.
+- **Helper process dying:** on 2026-10-02 the Maestro helper on the device stopped mid-run twice (`DeviceServerDiedException`): once over USB while reading the view hierarchy after a tap, and once over wireless ADB during `deviceInfo` while scrcpy was mirroring over the same link. The cause is not established (insufficient evidence; ADB stayed connected both times). A run that ends this way is classified as BLOCKED / INFRASTRUCTURE, not as an application failure.
+- **Result semantics:** an Icon Training assertion mismatch is FAIL. Unavailable ADB, ambiguous device selection, system UI covering the app and a dying Maestro helper are BLOCKED / INFRASTRUCTURE and never count as application failures.
 - **In-app vs system Back:** the in-app back arrow on the Forgot Password screen has no semantic selector, and Android system Back leads to a different screen. Flows do not substitute one for the other.
 
 ## 13. Discovery harness (design only, not implemented)

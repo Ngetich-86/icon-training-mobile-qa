@@ -50,7 +50,9 @@ Values were first read from the device's own settings screens. Values marked *(A
 | Date recorded | 2026-09-30 |
 | Date tested | Not yet tested |
 | Tester | Gideon Ngetich (@Ngetich-86) |
-| Test host | Windows 11 Pro host with Ubuntu 22.04.5 LTS under WSL2 (Linux 5.15.153.1, x86_64); OpenJDK 21.0.12.1; Node v22.22.3; npm 10.9.8 (WSL). Android Platform Tools / ADB 37.0.1 installed on Windows and invoked from WSL; it communicates with the device over USB. scrcpy 4.1 installed on Windows and used to observe and control the device. Android Studio and the full Android SDK are not installed |
+| Test host | Windows 11 Pro host with Ubuntu 22.04.5 LTS under WSL2 (Linux 5.15.153.1, x86_64); OpenJDK 21.0.12.1; Node v22.22.3; npm 10.9.8 (WSL). Android Platform Tools / ADB 37.0.1 installed on Windows and invoked from WSL; it communicated with the device over USB at first and over wireless ADB since 2026-10-02. scrcpy 4.1 installed on Windows and used to observe and control the device. Maestro CLI 2.11.0 on Windows (JDK 18.0.2.1, set per session). Android Studio and the full Android SDK are not installed |
+| ADB transport | Wireless ADB over the local Wi-Fi network: primary for normal QA runs since 2026-10-02. The IP address and port are assigned dynamically and change when wireless debugging reconnects; they are not recorded. USB ADB: the earlier setup, kept as a fallback. scrcpy 4.1 verified over wireless ADB (2026-10-02) |
+| Automation helpers on device | Maestro helper apps `dev.mobile.maestro` and `dev.mobile.maestro.test` stay installed between runs (approved 2026-10-02; lifecycle in [automation-strategy.md](automation-strategy.md#12-device-constraints-observed-on-env-001-coloros-131)) |
 | Notes | Dark mode: enabled. Font size: small. Display size (zoom) setting: not recorded; the 6.43 in value above is the physical screen size |
 
 #### ENV-001 history
@@ -60,6 +62,7 @@ Values were first read from the device's own settings screens. Values marked *(A
 | 2026-09-30 | Record created from the device's settings screens. Android Platform Tools / ADB was not available on the host, so the API level, screen resolution and pixel density were marked PENDING TOOL-BASED VERIFICATION. |
 | 2026-10-01 | OS, locale, network and display settings added from the device's settings screens. Icon Training 2.5.0 recorded from Android Settings → App info. |
 | 2026-10-01 | Android Platform Tools / ADB and scrcpy were configured on the Windows host (installation date not recorded). The pending values were verified with ADB: API level 33, physical size 1080 × 2400, physical density 480 dpi. ADB model identifier, vendor market name and build display ID added. Test host description corrected. This was environment verification, not application testing. |
+| 2026-10-02 | Wireless ADB over the local Wi-Fi network became the primary transport for normal QA runs; scrcpy 4.1 verified over it. USB ADB remains a fallback. Maestro helper apps now stay installed (`--no-reinstall-driver`). The device, Android version and app version are unchanged. Observed the same day: wireless ADB dropped twice and had to be reconnected manually on a new port. The dynamic endpoint is not recorded. |
 
 ADB queries used: `getprop` for `ro.product.manufacturer`, `ro.product.brand`, `ro.product.model`, `ro.vendor.oplus.market.name`, `ro.build.version.release`, `ro.build.version.sdk`, `ro.build.display.id` and `ro.build.version.oplusrom.display`; `wm size`; `wm density`. No device identifiers were recorded.
 
