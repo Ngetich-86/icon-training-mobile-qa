@@ -1,6 +1,6 @@
 # Automation Strategy
 
-> **Status:** DRAFT. Revised 2026-10-02: Maestro is the initial framework (section 9). One smoke flow exists. There is no regression coverage yet. Sections 3, 5 and 6 describe the original Appium / WebdriverIO plan and are kept as history.
+> **Status:** DRAFT. Revised 2026-10-02: Maestro is the initial framework (section 9). Two flows exist. There is no regression coverage yet. Sections 3, 5 and 6 describe the original Appium / WebdriverIO plan and are kept as history.
 
 ## 1. Goals
 
@@ -89,7 +89,7 @@ The original plan (sections 3, 5 and 6) chose Appium + WebdriverIO + TypeScript.
 
 | Layer | Tool | Status |
 |---|---|---|
-| UI automation | Maestro CLI 2.11.0 (Windows) | In use: 1 smoke flow |
+| UI automation | Maestro CLI 2.11.0 (Windows) | In use: 2 flows |
 | Device bridge | Android Platform Tools / ADB 37.0.1 (Windows) | In use |
 | Device | Physical OPPO Reno5 5G, `ENV-001` | In use |
 | Runtime | JDK 18 (Windows), set per session | In use |
@@ -103,10 +103,11 @@ The original plan (sections 3, 5 and 6) chose Appium + WebdriverIO + TypeScript.
 automation/maestro/
 ├── README.md        How to run, conventions, device constraints
 └── flows/
-    └── smoke/       One flow per test case, named after the TC- ID
+    ├── smoke/       Smoke flows, one per test case, named after the TC- ID
+    └── auth/        Authentication / account-entry navigation flows
 ```
 
-Folders are added only when they contain material (for example `flows/auth/`, `flows/navigation/` or `subflows/` for shared steps). The placeholder folders from the original plan (`config/`, `screens/`, `fixtures/`, `utils/`, `tests/`) are unused.
+Folders are added only when they contain material (for example `flows/navigation/` or `subflows/` for shared steps). The placeholder folders from the original plan (`config/`, `screens/`, `fixtures/`, `utils/`, `tests/`) are unused.
 
 Each flow maps to exactly one test case in `test-cases/`. The test case is the source of truth for steps and expected results. A test result is recorded in the test case only after the flow has actually run.
 
@@ -160,6 +161,8 @@ Automation stops and reports when: an unknown sensitive screen appears; credenti
 
 - **Helper reinstall and installer screen:** Maestro installs its helper apps at the start of a run, and they are no longer present afterwards. ColorOS sometimes shows its own app-installed result screen over the app at that moment. On 2026-10-02 this caused one tooling failure (the target element was hidden behind the installer screen). Flows should start with `launchApp`, which brings the app back to the foreground. `--no-reinstall-driver` does not help, because the helpers do not persist.
 - **Default permission grants:** by default, Maestro's `launchApp` tries to grant every permission the app declares. ColorOS rejected all of these attempts (`SecurityException`). Flows therefore set `permissions` explicitly to the current device state, so that a run does not try to change permissions.
+- **Helper process dying:** on 2026-10-02 the Maestro helper on the device stopped mid-run (`DeviceServerDiedException` while reading the view hierarchy) after a tap had already been performed. A run that ends this way is classified as BLOCKED / INFRASTRUCTURE, not as an application failure.
+- **In-app vs system Back:** the in-app back arrow on the Forgot Password screen has no semantic selector, and Android system Back leads to a different screen. Flows do not substitute one for the other.
 
 ## 13. Discovery harness (design only, not implemented)
 

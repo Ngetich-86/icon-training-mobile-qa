@@ -1,6 +1,6 @@
 # Test Cases
 
-> **One test case exists:** [`TC-AUTH-001`](authentication/TC-AUTH-001-signed-out-launch-screen.md) (smoke, automated with Maestro). Broader test design continues in Milestone M2, after the verified feature inventory (M1).
+> **Two test cases exist:** [`TC-AUTH-001`](authentication/TC-AUTH-001-signed-out-launch-screen.md) (smoke) and [`TC-AUTH-002`](authentication/TC-AUTH-002-open-forgot-password-from-login.md) (navigation), both automated with Maestro. Broader test design continues in Milestone M2, after the verified feature inventory (M1).
 
 ## Organization
 

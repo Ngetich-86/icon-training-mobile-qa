@@ -1,14 +1,15 @@
 # Maestro flows
 
-> **Status:** One smoke flow (`TC-AUTH-001`). There is no regression suite yet. See [docs/automation-strategy.md](../../docs/automation-strategy.md) for the strategy, the autonomy model and device constraints.
+> **Status:** Two flows (`TC-AUTH-001` smoke, `TC-AUTH-002` auth navigation). There is no regression suite yet. See [docs/automation-strategy.md](../../docs/automation-strategy.md) for the strategy, the autonomy model and device constraints.
 
 ## Layout
 
 | Path | Contents |
 |---|---|
 | `flows/smoke/` | Smoke flows. One file per test case, named after its `TC-` ID |
+| `flows/auth/` | Authentication and account-entry navigation flows |
 
-New folders (for example `flows/auth/`, `flows/navigation/`, `subflows/`) are added only when they contain flows.
+New folders (for example `flows/navigation/`, `subflows/`) are added only when they contain flows.
 
 ## Requirements
 

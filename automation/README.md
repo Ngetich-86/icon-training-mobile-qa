@@ -1,6 +1,6 @@
 # Automation
 
-> **Status:** Revised 2026-10-02. Automation uses **Maestro**: see [maestro/](maestro/README.md), which holds one smoke flow. There is no regression suite yet. The Appium / WebdriverIO architecture below is the original plan (2026-09-30), kept for history; its placeholder folders (`config/`, `screens/`, `tests/`, `fixtures/`, `utils/`) are unused. Reasons for the change are in [docs/automation-strategy.md](../docs/automation-strategy.md#9-strategy-revision--2026-10-02-maestro-as-the-initial-framework).
+> **Status:** Revised 2026-10-02. Automation uses **Maestro**: see [maestro/](maestro/README.md), which holds two flows. There is no regression suite yet. The Appium / WebdriverIO architecture below is the original plan (2026-09-30), kept for history; its placeholder folders (`config/`, `screens/`, `tests/`, `fixtures/`, `utils/`) are unused. Reasons for the change are in [docs/automation-strategy.md](../docs/automation-strategy.md#9-strategy-revision--2026-10-02-maestro-as-the-initial-framework).
 
 ## Original proposed architecture (superseded)
 
