@@ -1,7 +1,7 @@
 # Icon Training — Mobile QA Engineering Portfolio
 
-> **Project status: PLANNING / INITIAL SETUP**
-> No test execution has been performed yet. This repository has no test results, defect reports, coverage figures or CI results. They will be added only as real, verified work is completed.
+> **Project status: M1 in progress — product exploration and a Maestro automation spike.**
+> Two smoke test cases have been executed and passed on one physical Android device (`ENV-001`, app 2.5.0, 2026-10-02). No defects have been reported and no execution or release reports exist yet. Results are added only as real, verified work is completed. See [Current evidence](#current-evidence).
 
 ---
 
@@ -79,18 +79,19 @@ These areas are working assumptions for organizing the repository. An area stays
 - API testing — **only** where legally and technically appropriate (for example, documented public interfaces), and never against private endpoints
 - AI feature evaluation (see [docs/ai-testing-strategy.md](docs/ai-testing-strategy.md))
 
-## 5. Planned Technology Stack
+## 5. Technology Stack
 
-All items below are **PLANNED**. None are implemented yet.
+The original plan (Appium + WebdriverIO + TypeScript) was revised on 2026-10-02 before any of it was built: the app under test is the public Google Play build, so black-box automation that needs no app source or test APK is a better fit. Rationale: [docs/automation-strategy.md §9](docs/automation-strategy.md).
 
 | Purpose | Tool | Status |
 |---|---|---|
-| Mobile automation driver | Appium | PLANNED |
-| Test runner / framework | WebdriverIO | PLANNED |
-| Language | TypeScript | PLANNED |
-| Target devices | Android Emulator / authorized physical Android device | PLANNED |
-| CI/CD | GitHub Actions | PLANNED |
-| Reporting | Allure | PLANNED |
+| UI automation | [Maestro](https://docs.maestro.dev/) CLI 2.11.0 (YAML flows) | **In use** — 2 flows |
+| Device bridge | Android Platform Tools / ADB (wireless, USB fallback) | **In use** |
+| Run preflight | [`automation/maestro/scripts/preflight.ps1`](automation/maestro/scripts/preflight.ps1) | **In use** — selects exactly one physical device, checks app version and helper apps, blocks on covering system UI; prints no device identifiers |
+| Target device | Physical OPPO Reno5 5G, Android 13 / ColorOS 13.1 (`ENV-001`) | **In use** |
+| Alternative driver | Appium | Kept as a fallback if a Maestro limitation appears |
+| CI | GitHub Actions | PLANNED — static checks only; the physical device is not reachable from hosted runners |
+| Reporting | Maestro JUnit/HTML output summarized into `reports/` | PLANNED |
 
 ## 6. Repository Structure
 
@@ -103,7 +104,7 @@ All items below are **PLANNED**. None are implemented yet.
 ├── test-cases/                Manual test cases, one folder per feature area
 ├── exploratory/               Exploratory charters and session reports
 ├── bugs/                      Defect reports, template and sanitized evidence
-├── automation/                Future Appium + WebdriverIO + TypeScript framework
+├── automation/                Maestro flows (maestro/flows) and the device preflight script
 ├── test-data/                 Synthetic test data only
 ├── reports/                   Execution, regression and release reports
 └── .github/                   Issue/PR templates and (future) workflows
@@ -143,21 +144,37 @@ Work is tracked issue-first through GitHub Issues and Milestones (M0–M9). See 
 
 Each test cycle will record the exact application version, Android version, device (emulator or physical), screen resolution, network conditions, locale, date and tester. The template is in [docs/test-environments.md](docs/test-environments.md).
 
-*No environments have been recorded yet.*
+| Environment | App | Device / OS | Type | Last tested |
+|---|---|---|---|---|
+| `ENV-001` | Icon Training 2.5.0 | OPPO Reno5 5G, Android 13 (ColorOS 13.1) | Physical | 2026-10-02 (TC-AUTH-001, TC-AUTH-002) |
 
-## 9. Automation Roadmap
+**Device coverage:** Android only, one physical device. **iOS and emulators have not been tested.** Device-specific constraints observed on ColorOS (permission grants, helper apps, wireless ADB drops) are recorded in [docs/automation-strategy.md §12](docs/automation-strategy.md).
 
-Automation will begin only after:
+## 9. Automation
 
-1. Application exploration
-2. Feature inventory
-3. Risk analysis
-4. Manual test design
-5. Identification of stable automation candidates
+Automation follows exploration: a flow is written only for a manually understood, stable, high-value path, and every flow maps to a test case ID.
 
-Planned architecture: Appium → WebdriverIO → TypeScript → Screen Objects → reusable fixtures/utilities → smoke/functional/regression suites → GitHub Actions → Allure reports.
+| Flow | Test case | Last result |
+|---|---|---|
+| [`flows/smoke/TC-AUTH-001-signed-out-launch-screen.yaml`](automation/maestro/flows/smoke/TC-AUTH-001-signed-out-launch-screen.yaml) | [TC-AUTH-001](test-cases/authentication/TC-AUTH-001-signed-out-launch-screen.md) | PASS — 2026-10-02, `ENV-001` |
+| [`flows/auth/TC-AUTH-002-open-forgot-password-from-login.yaml`](automation/maestro/flows/auth/TC-AUTH-002-open-forgot-password-from-login.yaml) | [TC-AUTH-002](test-cases/authentication/TC-AUTH-002-open-forgot-password-from-login.md) | PASS — 2026-10-02, `ENV-001` |
 
-See [automation/README.md](automation/README.md) and [docs/automation-strategy.md](docs/automation-strategy.md).
+Flow conventions: text/semantic selectors, no fixed sleeps, explicit permissions, no state clearing.
+
+### How to reproduce a run
+
+1. Install Maestro 2.11.0 (Java 17+) and Android Platform Tools; connect the device over wireless ADB or USB.
+2. Run the preflight from PowerShell (dot-sourced) and continue only if `$env:ICON_QA_PREFLIGHT` is `READY`.
+3. Run a flow with `maestro test --no-reinstall-driver <flow.yaml>`.
+
+Full instructions: [automation/maestro/README.md](automation/maestro/README.md). Raw Maestro output is kept local and is not committed (see Privacy).
+
+### Result semantics
+
+| Situation | Recorded as |
+|---|---|
+| The app does not match the expected result | **FAIL** |
+| Preflight BLOCKED, ADB unavailable, ambiguous device, system UI covering the app, Maestro helper crash | **BLOCKED / INFRASTRUCTURE** — not a product defect |
 
 ## 10. Reporting
 
@@ -168,7 +185,7 @@ Planned reports:
 - **Release quality reports** (`reports/release/`, [docs/release-quality-report.md](docs/release-quality-report.md)): overall quality assessment for a tested version
 - **Allure reports**: generated by CI once automation exists (planned)
 
-*No reports have been produced yet.*
+*No execution, regression or release reports have been produced yet.* Results so far are recorded in each test case's execution history.
 
 ## 11. Privacy & Responsible Disclosure
 
@@ -193,20 +210,41 @@ Full rules are in [CONTRIBUTING.md](CONTRIBUTING.md#privacy-checks).
 
 ## 12. Current Project Status
 
-**PLANNING / INITIAL SETUP**
+### Current evidence
+
+| Artifact | Count | Where |
+|---|---|---|
+| Feature inventory entries | 13 features, 11 navigation observations | [docs/feature-inventory.md](docs/feature-inventory.md) |
+| Test cases executed | 2 (both PASS) | [test-cases/authentication](test-cases/authentication) |
+| Automated flows | 2 (Maestro) | [automation/maestro/flows](automation/maestro/flows) |
+| Recorded environments | 1 physical Android device | [docs/test-environments.md](docs/test-environments.md) |
+| Defect reports | 0 | [bugs/](bugs) — template and issue form ready |
+| Exploratory session reports | 0 | [exploratory/](exploratory) — charter template ready |
+| Execution / release reports | 0 | [reports/](reports) |
+
+### Milestones
 
 | Milestone | Status |
 |---|---|
 | M0 — QA Repository Foundation | Complete |
-| M1 — Product Exploration & Feature Inventory | Not started |
+| M1 — Product Exploration & Feature Inventory | In progress |
 | M2 — Risk Analysis & Test Design | Not started |
 | M3 — Manual Functional Testing | Not started |
 | M4 — Exploratory & Mobile-Specific Testing | Not started |
-| M5 — Android Automation Foundation | Not started |
+| M5 — Android Automation Foundation | In progress — Maestro foundation, preflight and first smoke flows done |
 | M6 — Automated Regression Coverage | Not started |
 | M7 — AI Feature Evaluation | Not started |
 | M8 — CI/CD & Reporting | Not started |
 | M9 — Release Quality Assessment | Not started |
+
+Work is tracked in [Issues](https://github.com/Ngetich-86/icon-training-mobile-qa/issues) and [Milestones](https://github.com/Ngetich-86/icon-training-mobile-qa/milestones).
+
+### Limitations
+
+- One physical Android device; no iOS, emulator or device-matrix coverage yet.
+- Only signed-out authentication flows are covered so far; Premium-gated areas are not reachable without a subscription.
+- No CI: flows run locally against the physical device. Wireless ADB on `ENV-001` drops intermittently, which is recorded as BLOCKED / INFRASTRUCTURE rather than as a product result.
+- Test plan, risk assessment and release-quality documents are templates until M2/M9 work is done.
 
 ## 13. Author
 

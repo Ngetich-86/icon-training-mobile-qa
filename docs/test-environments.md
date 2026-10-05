@@ -1,6 +1,6 @@
 # Test Environments
 
-> **Status:** `ENV-001` is recorded as a baseline. Fields that the device's settings do not show were verified with Android Platform Tools / ADB on 2026-10-01 (see [ENV-001 history](#env-001-history)). No functional testing has been performed in any environment.
+> **Status:** `ENV-001` is recorded as a baseline. Fields that the device's settings do not show were verified with Android Platform Tools / ADB on 2026-10-01 (see [ENV-001 history](#env-001-history)). Smoke testing (TC-AUTH-001, TC-AUTH-002) was performed on `ENV-001` on 2026-10-02.
 
 Record a new entry for every distinct environment used in a test cycle. Test cases, bug reports and reports refer to entries by **Environment ID**.
 
@@ -27,7 +27,7 @@ Do **not** record device serial numbers, IMEIs, account emails or other identify
 
 | Environment ID | App version | Android | Device | Type | Resolution | Network | Locale | Date | Tester |
 |---|---|---|---|---|---|---|---|---|---|
-| `ENV-001` | 2.5.0 | Android 13 | OPPO Reno5 5G | Physical | 1080 × 2400, 480 dpi | Wi-Fi | en-US, Kenya, Africa/Nairobi | Not yet tested | Gideon Ngetich |
+| `ENV-001` | 2.5.0 | Android 13 | OPPO Reno5 5G | Physical | 1080 × 2400, 480 dpi | Wi-Fi | en-US, Kenya, Africa/Nairobi | 2026-10-02 | Gideon Ngetich |
 
 ### ENV-001 — Physical Android baseline
 
