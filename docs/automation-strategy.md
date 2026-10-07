@@ -1,6 +1,6 @@
 # Automation Strategy
 
-> **Status:** DRAFT. Revised 2026-10-02: Maestro is the initial framework (section 9). Two flows exist. There is no regression coverage yet. Sections 3, 5 and 6 describe the original Appium / WebdriverIO plan and are kept as history.
+> **Status:** DRAFT. Revised 2026-10-02: Maestro is the initial framework (section 9). Revised 2026-10-07: APK-first test design (section 14). Two flows exist. There is no regression coverage yet. Sections 3, 5 and 6 describe the original Appium / WebdriverIO plan and are kept as history.
 
 ## 1. Goals
 
@@ -64,7 +64,7 @@ automation/
 ## 7. Legal / ethical boundaries
 
 - Automate only through the public UI of the installed application.
-- Do not decompile, patch, or bypass protections in the app.
+- Do not patch, repackage or instrument the app, and do not bypass its protections. Read-only static analysis of the installed APK is allowed for test design (section 14); its raw output stays local.
 - Do not automate against private APIs.
 - Respect the application's terms of service and avoid generating excessive load.
 
@@ -197,3 +197,11 @@ Safeguards:
 - **Output:** proposed inventory and navigation-log entries for human review, never direct edits. Raw hierarchy stays local and is git-ignored.
 
 It is not an unrestricted crawler and does not tap arbitrary controls.
+
+## 14. Strategy transition — 2026-10-07: APK-first test design
+
+Static analysis of the installed APK now comes before further test design: manual exploratory baseline → APK/static analysis → risk-based test design → targeted real-device verification → high-value Maestro regression. API and performance testing follow only where legitimate and appropriate.
+
+- Pass 1 (application envelope) is documented in [apk-analysis.md](apk-analysis.md). It identifies a Flutter app with Shorebird code-push components, which affects how versions are recorded.
+- Static findings choose *where* to test. A Maestro flow is still written only for behavior observed on the device and mapped to a `TC-` test case.
+- The boundaries in section 7 still apply: no patching, repackaging, protection bypass or private-API use. APK files and decompiler output are never committed.

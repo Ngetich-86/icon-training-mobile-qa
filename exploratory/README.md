@@ -61,4 +61,4 @@ Each session report records:
 
 - Record only what was actually observed during the session.
 - Sanitize all evidence before committing.
-- Do not use exploratory testing as a reason to probe private APIs or reverse engineer the app.
+- Do not use exploratory testing as a reason to probe private APIs, modify the app or bypass its protections. Static APK analysis is a separate, documented activity ([docs/apk-analysis.md](../docs/apk-analysis.md)).

@@ -140,6 +140,7 @@ The following **MUST NOT** be committed or posted:
 - Private company documents, proprietary documentation, confidential requirements or proprietary source code
 - Internal communications, internal issue-tracker screenshots, and internal issue IDs where they are confidential
 - Unsanitized screenshots, recordings, logs or reports
+- APK binaries (`.apk`, `.apks`, `.aab`), decompiled or recovered proprietary source, raw static-analysis output (JADX/Apktool output, extracted `.dex` or `.so` files), and configuration values recovered from the app. Only sanitized findings are published, as in [docs/apk-analysis.md](docs/apk-analysis.md).
 
 ### Evidence types
 

@@ -37,6 +37,8 @@ Values were first read from the device's own settings screens. Values marked *(A
 |---|---|
 | Environment ID | `ENV-001` |
 | Application version | Icon Training 2.5.0. Verified 2026-10-01 from Android Settings → App info. Build/version code: not exposed in Android App info |
+| Version code | 65 — STATIC-OBSERVED from APK analysis (2026-10-07, [apk-analysis.md](apk-analysis.md)); not yet verified at runtime |
+| Code-push / patch state | Shorebird code-push components were identified statically. Runtime patch state is NOT-YET-VERIFIED; therefore store version 2.5.0 / versionCode 65 may not by themselves fully identify the Dart code under test. |
 | Installation source | Google Play Store |
 | Android version | Android 13, API level 33 *(ADB, 2026-10-01)* |
 | Device | OPPO / OPPO Reno5 5G. ADB model identifier: `PEGM00`; ADB vendor market name: OPPO Reno5 5G *(ADB, 2026-10-01)* |
@@ -48,7 +50,7 @@ Values were first read from the device's own settings screens. Values marked *(A
 | Network | Wi-Fi (baseline) |
 | Locale | Language: English (United States); Region: Kenya; Time zone: Africa/Nairobi |
 | Date recorded | 2026-09-30 |
-| Date tested | Not yet tested |
+| Date tested | 2026-10-02 (TC-AUTH-001, TC-AUTH-002) |
 | Tester | Gideon Ngetich (@Ngetich-86) |
 | Test host | Windows 11 Pro host with Ubuntu 22.04.5 LTS under WSL2 (Linux 5.15.153.1, x86_64); OpenJDK 21.0.12.1; Node v22.22.3; npm 10.9.8 (WSL). Android Platform Tools / ADB 37.0.1 installed on Windows and invoked from WSL; it communicated with the device over USB at first and over wireless ADB since 2026-10-02. scrcpy 4.1 installed on Windows and used to observe and control the device. Maestro CLI 2.11.0 on Windows (JDK 18.0.2.1, set per session). Android Studio and the full Android SDK are not installed |
 | ADB transport | Wireless ADB over the local Wi-Fi network: primary for normal QA runs since 2026-10-02. The IP address and port are assigned dynamically and change when wireless debugging reconnects; they are not recorded. USB ADB: the earlier setup, kept as a fallback. scrcpy 4.1 verified over wireless ADB (2026-10-02) |
@@ -63,6 +65,7 @@ Values were first read from the device's own settings screens. Values marked *(A
 | 2026-10-01 | OS, locale, network and display settings added from the device's settings screens. Icon Training 2.5.0 recorded from Android Settings → App info. |
 | 2026-10-01 | Android Platform Tools / ADB and scrcpy were configured on the Windows host (installation date not recorded). The pending values were verified with ADB: API level 33, physical size 1080 × 2400, physical density 480 dpi. ADB model identifier, vendor market name and build display ID added. Test host description corrected. This was environment verification, not application testing. |
 | 2026-10-02 | Wireless ADB over the local Wi-Fi network became the primary transport for normal QA runs; scrcpy 4.1 verified over it. USB ADB remains a fallback. Maestro helper apps now stay installed (`--no-reinstall-driver`). The device, Android version and app version are unchanged. Observed the same day: wireless ADB dropped twice and had to be reconnected manually on a new port. The dynamic endpoint is not recorded. |
+| 2026-10-07 | Version code 65 added from static APK analysis of the installed Play copy (STATIC-OBSERVED). Shorebird code-push components identified statically; runtime patch state not yet verified. The "Date tested" field corrected to 2026-10-02, matching the summary table and test-case records. |
 
 ADB queries used: `getprop` for `ro.product.manufacturer`, `ro.product.brand`, `ro.product.model`, `ro.vendor.oplus.market.name`, `ro.build.version.release`, `ro.build.version.sdk`, `ro.build.display.id` and `ro.build.version.oplusrom.display`; `wm size`; `wm density`. No device identifiers were recorded.
 

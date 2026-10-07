@@ -35,6 +35,17 @@ appium-*.log
 *.ipa
 *.xapk
 
+# ---------- APK static analysis (raw output stays local) ----------
+# Split-APK sets, extracted code and native libraries, decompiler output.
+*.apks
+*.dex
+*.so
+*.smali
+jadx*/
+apktool*/
+decompiled/
+/analysis/
+
 # ---------- Allure / generated reports ----------
 allure-results/
 allure-report/

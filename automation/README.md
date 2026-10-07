@@ -47,7 +47,7 @@ The candidate selection criteria are in [docs/automation-strategy.md](../docs/au
 ## Boundaries
 
 - Automate only through the public UI of the installed application.
-- Do not decompile, patch or instrument the app binary.
+- Do not patch, repackage or instrument the app binary, or bypass its protections. Static analysis of the installed APK for test design is documented in [docs/apk-analysis.md](../docs/apk-analysis.md); its raw output stays local and is never committed.
 - Do not use private or internal APIs.
 - Supply credentials through environment variables or CI secrets only. Never commit them.
 - Do not commit app binaries (`.apk` / `.aab`).

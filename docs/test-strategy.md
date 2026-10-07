@@ -26,11 +26,15 @@ Define the overall approach for assessing the quality of the publicly available 
 - Mobile-specific behavior: lifecycle, interruptions, network conditions, orientation
 - Accessibility
 
+**Static analysis (in scope, with limits):** static analysis of APK artifacts extracted from the maintainer's own installed Google Play copy, solely for QA architecture understanding and test design ([apk-analysis.md](apk-analysis.md)). Raw APK files and decompiler output stay local and are never committed. Static findings are not treated as runtime behavior until observed on a device.
+
 **Out of scope:**
 
-- Reverse engineering or decompiling the application
+- Modifying, repackaging or re-signing the application; bypassing app or platform protections
 - Private/internal APIs and backend systems
-- Security/penetration testing of production infrastructure
+- Unauthorized security/penetration testing, including of production infrastructure
+- Publishing recovered proprietary source code, secrets or sensitive configuration values
+- Destructive testing
 - Performance/load testing against production services
 - iOS (unless added later with a suitable device)
 

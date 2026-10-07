@@ -1,7 +1,7 @@
 # Icon Training — Mobile QA Engineering Portfolio
 
-> **Project status: M1 in progress — product exploration and a Maestro automation spike.**
-> Two smoke test cases have been executed and passed on one physical Android device (`ENV-001`, app 2.5.0, 2026-10-02). No defects have been reported and no execution or release reports exist yet. Results are added only as real, verified work is completed. See [Current evidence](#current-evidence).
+> **Project status: M1 in progress — product exploration, APK static analysis and a Maestro automation foundation.**
+> Two automated test cases have been executed and passed on one physical Android device (`ENV-001`, app 2.5.0, 2026-10-02): `TC-AUTH-001` (smoke) and `TC-AUTH-002` (functional navigation). No defects have been reported and no execution or release reports exist yet. Results are added only as real, verified work is completed. See [Current evidence](#current-evidence).
 
 ---
 
@@ -54,17 +54,22 @@ The maintainer is a QA Engineer with Icon Train Smarter. This repository is a **
 
 These areas are working assumptions for organizing the repository. An area stays unconfirmed until it has been observed in the tested app version.
 
+**Static analysis (in scope, with limits):** static analysis of APK artifacts extracted from the maintainer's own installed public Google Play copy, solely for QA architecture understanding and test design. Raw APK files and decompiler output stay local and are never committed; only sanitized findings are published ([docs/apk-analysis.md](docs/apk-analysis.md)). Static findings are not treated as runtime behavior until observed on a device.
+
 **Out of scope:**
 
-- Reverse engineering, decompiling or modifying the application
-- Inspecting or testing private/internal APIs or backend systems
-- Security or penetration testing of production infrastructure
-- Load or stress testing against production services
+- Modifying, repackaging or re-signing the application
+- Bypassing app, platform or security protections
+- Inspecting, probing or testing private/internal APIs or backend infrastructure
+- Unauthorized security or penetration testing
+- Publishing recovered proprietary source code, secrets or sensitive configuration values
+- Destructive testing, and load or stress testing against production services
 - Any testing that uses real user accounts or data other than the maintainer's own authorized test accounts
 
 ## 4. Planned Testing Types
 
 - Risk-based QA planning
+- Static analysis of the installed app's APK (application envelope: metadata, permissions, components, frameworks)
 - Smoke testing
 - Manual functional testing
 - Regression testing
@@ -100,7 +105,7 @@ The original plan (Appium + WebdriverIO + TypeScript) was revised on 2026-10-02 
 ├── README.md                  Project overview (this file)
 ├── LICENSE
 ├── CONTRIBUTING.md            Workflow, branching, commits, evidence and privacy rules
-├── docs/                      Strategy, plan, risk, environments, automation, AI, release report
+├── docs/                      Strategy, plan, risk, environments, APK analysis, automation, AI, release report
 ├── test-cases/                Manual test cases, one folder per feature area
 ├── exploratory/               Exploratory charters and session reports
 ├── bugs/                      Defect reports, template and sanitized evidence
@@ -111,6 +116,30 @@ The original plan (Appium + WebdriverIO + TypeScript) was revised on 2026-10-02 
 ```
 
 ## 7. QA Workflow
+
+### Current approach (revised 2026-10-07)
+
+```
+Manual exploratory baseline
+        ↓
+APK / static analysis
+        ↓
+Risk-based test design
+        ↓
+Targeted real-device verification
+        ↓
+High-value Maestro regression
+        ↓
+API testing — only where legitimate and appropriate
+        ↓
+Controlled performance testing — only where appropriate
+        ↓
+Evidence-based QA reporting
+```
+
+The manual observations and Maestro work recorded so far remain valid and are the baseline for each later step. Static findings guide test design; they become product facts only when observed on a device.
+
+### Full QA lifecycle
 
 ```
 Product understanding
@@ -215,6 +244,7 @@ Full rules are in [CONTRIBUTING.md](CONTRIBUTING.md#privacy-checks).
 | Artifact | Count | Where |
 |---|---|---|
 | Feature inventory entries | 13 features, 11 navigation observations | [docs/feature-inventory.md](docs/feature-inventory.md) |
+| APK static analysis | Pass 1 (application envelope), app 2.5.0 | [docs/apk-analysis.md](docs/apk-analysis.md) |
 | Test cases executed | 2 (both PASS) | [test-cases/authentication](test-cases/authentication) |
 | Automated flows | 2 (Maestro) | [automation/maestro/flows](automation/maestro/flows) |
 | Recorded environments | 1 physical Android device | [docs/test-environments.md](docs/test-environments.md) |
@@ -231,7 +261,7 @@ Full rules are in [CONTRIBUTING.md](CONTRIBUTING.md#privacy-checks).
 | M2 — Risk Analysis & Test Design | Not started |
 | M3 — Manual Functional Testing | Not started |
 | M4 — Exploratory & Mobile-Specific Testing | Not started |
-| M5 — Android Automation Foundation | In progress — Maestro foundation, preflight and first smoke flows done |
+| M5 — Android Automation Foundation | In progress — Maestro foundation, preflight and first two flows done |
 | M6 — Automated Regression Coverage | Not started |
 | M7 — AI Feature Evaluation | Not started |
 | M8 — CI/CD & Reporting | Not started |
